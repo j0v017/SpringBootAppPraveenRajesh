@@ -51,17 +51,15 @@ public class UserRestController {
 	}
 
 	@DeleteMapping("/users/{userId}")
-	public ResponseEntity<?> deleteUser(@RequestParam Long userId) {
-
+	public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
 		userService.deleteUser(userId);
 		return new ResponseEntity<>(true, HttpStatus.OK);
-
 	}
 
 	@PutMapping("/users")
 	public ResponseEntity<?> updateUser(UserDto userDto, BindingResult result) {
 
-		if (!result.hasErrors()) {
+		if (result.hasErrors()) {
 			throw new InvalidDataException("Invalid User Data");
 		}
 		userService.updateUser(userDto);

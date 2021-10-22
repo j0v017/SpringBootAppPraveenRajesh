@@ -43,7 +43,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto userDto) {
-		User user = new User();
+		User user = repository.findById(userDto.getUserId()).get();
+		//BeanUtils.copyProperties(userDto, user,"userId");
 		BeanUtils.copyProperties(userDto, user);
 		user = repository.save(user);
 		BeanUtils.copyProperties(user, userDto);
@@ -52,9 +53,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean deleteUser(Long userId) {
-		UserDto userDto = getById(userId);
-		User user = new User();
-		BeanUtils.copyProperties(userDto, user);
+		User user = repository.findById(userId).get();
 		repository.delete(user);
 		return true;
 	}
