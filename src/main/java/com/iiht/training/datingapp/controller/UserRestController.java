@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import com.iiht.training.datingapp.dto.UserDto;
 import com.iiht.training.datingapp.exceptions.InvalidDataException;
 import com.iiht.training.datingapp.service.UserService;
+
+import javax.validation.Valid;
 
 @RestController
 public class UserRestController {
@@ -39,8 +42,8 @@ public class UserRestController {
 
 	}
 
-	@PostMapping("/users")
-	public ResponseEntity<?> saveUser(UserDto userDto, BindingResult result) {
+	@PostMapping(path ="/users" ,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> saveUser(@Valid @RequestBody UserDto userDto, BindingResult result) {
 
 		if (result.hasErrors()) {
 			throw new InvalidDataException("Invalid User Data");
@@ -56,8 +59,8 @@ public class UserRestController {
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@PutMapping("/users")
-	public ResponseEntity<?> updateUser(UserDto userDto, BindingResult result) {
+	@PutMapping(path = "/users",consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto, BindingResult result) {
 
 		if (result.hasErrors()) {
 			throw new InvalidDataException("Invalid User Data");

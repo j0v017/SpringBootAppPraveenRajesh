@@ -43,8 +43,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto userDto) {
-		User user = repository.findById(userDto.getUserId()).get();
-		//BeanUtils.copyProperties(userDto, user,"userId");
+		Optional<User> userOptional = repository.findById(userDto.getUserId());
+		if(!userOptional.isPresent()){
+			throw new UserNotFoundException("User Not found");
+		}
+		User user = userOptional.get();
 		BeanUtils.copyProperties(userDto, user);
 		user = repository.save(user);
 		BeanUtils.copyProperties(user, userDto);
@@ -53,7 +56,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean deleteUser(Long userId) {
-		User user = repository.findById(userId).get();
+		Optional<User> userOptional = repository.findById(userId);
+		if(!userOptional.isPresent()){
+			throw new UserNotFoundException("User Not found");
+		}
+		User user = userOptional.get();
 		repository.delete(user);
 		return true;
 	}
