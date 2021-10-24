@@ -1,13 +1,16 @@
 package com.iiht.training.datingapp.dto;
 
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class DislikeDto {
 
 	private Long id;
-	
+
+	@NotNull
 	private Long userId;
-	
+
+	@NotNull
 	private Long dislikedUserId;
 
 	public Long getId() {
