@@ -1,5 +1,9 @@
 package com.iiht.training.datingapp.dto;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,15 +12,23 @@ public class InterestsDto {
 	private Long interestId;
 	
 	private Long userId;
-	
+
+	@NotBlank
+	@Length(min = 3, max = 100)
 	private String interestedIn;
-	
+
+	@NotBlank
+	@Length(min = 3, max = 100)
 	private String notInterestedIn;
-	
+
+	@NotNull
 	private List<String> hobbies;
-	
+
+	@NotNull
 	private String profileUrl;
-	
+
+	@NotBlank
+	@Length(min = 3, max = 100)
 	private String about;
 
 	public Long getInterestId() {

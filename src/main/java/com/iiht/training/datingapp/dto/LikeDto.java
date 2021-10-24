@@ -1,14 +1,20 @@
 package com.iiht.training.datingapp.dto;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 public class LikeDto {
 
 
 	private Long id;
-	
+
+	@NotNull
 	private Long userId;
 
+	@NotNull
 	private Long likedUserId;
 
 	public Long getId() {
