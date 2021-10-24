@@ -2,12 +2,12 @@ package com.iiht.training.datingapp.controller;
 
 import java.util.List;
 
+import com.iiht.training.datingapp.dto.InterestsDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.iiht.training.datingapp.dto.MatchDto;
 import com.iiht.training.datingapp.dto.UserDto;
@@ -22,13 +22,15 @@ public class MatchRestController {
 	MatchService matchService;
 
 
-	@GetMapping("/{userId}")
-	public List<MatchDto> getMatches(@RequestParam Long userId) {
-		return matchService.getAllMatches(userId);
+	@GetMapping(path ="/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<MatchDto>>  getMatches(@PathVariable Long userId) {
+		List<MatchDto> matches = matchService.getAllMatches(userId);
+		return new ResponseEntity<List<MatchDto>>(matches, HttpStatus.OK);
 	}
 
 	@PostMapping("/{userId}")
-	public List<UserDto> getCandidates(@RequestParam Long userId, List<Filter> filters) {
-		return matchService.getPotentialMatches(userId, filters);
+	public ResponseEntity<List<UserDto>> getCandidates(@PathVariable Long userId, @RequestBody List<Filter> filters) {
+		List<UserDto> users = matchService.getPotentialMatches(userId, filters);
+		return new ResponseEntity<List<UserDto>>(users, HttpStatus.OK);
 	}
 }
