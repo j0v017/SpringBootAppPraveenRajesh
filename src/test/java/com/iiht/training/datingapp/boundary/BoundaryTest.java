@@ -5,8 +5,6 @@ import static com.iiht.training.datingapp.testutils.TestUtils.currentTest;
 import static com.iiht.training.datingapp.testutils.TestUtils.testReport;
 import static com.iiht.training.datingapp.testutils.TestUtils.yakshaAssert;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -14,6 +12,7 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import com.iiht.training.datingapp.dto.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 //import org.junit.Test;
@@ -22,16 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.iiht.training.datingapp.dto.DislikeDto;
-import com.iiht.training.datingapp.dto.InterestsDto;
-import com.iiht.training.datingapp.dto.LikeDto;
-import com.iiht.training.datingapp.dto.MatchDto;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.Dislike;
-import com.iiht.training.datingapp.entity.Interests;
-import com.iiht.training.datingapp.entity.Like;
-import com.iiht.training.datingapp.entity.Match;
-import com.iiht.training.datingapp.entity.User;
+import com.iiht.training.datingapp.dto.SellerDto;
 import com.iiht.training.datingapp.testutils.MasterData;
 
 @ExtendWith(SpringExtension.class)
@@ -52,138 +42,138 @@ public class BoundaryTest {
 
 	@Test
 	public void testUserNameNotNull() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setName("");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setName("");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserNameMinThree() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setName("Ab");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setName("Ab");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserNameMaxHundred() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
+		SellerDto sellerDto = MasterData.getUserDto();
 		String name = "";
 		for (int i = 0; i < 120; i++) {
 			name.concat("A");
 		}
-		userDto.setName(name);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		sellerDto.setName(name);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserAgeNotNull() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setAge(null);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setAge(null);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserAgeMinEighteen() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setAge(10);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setAge(10);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserAgeMaxSixty() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setAge(65);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setAge(65);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserMobileNotNull() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setPhoneNumber(null);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setPhoneNumber(null);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserMobileMinTen() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setPhoneNumber(12345L);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setPhoneNumber(12345L);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserMobileMaxTen() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
+		SellerDto sellerDto = MasterData.getUserDto();
 
-		userDto.setPhoneNumber(123456789012L);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		sellerDto.setPhoneNumber(123456789012L);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserGenderNotNull() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setGender("");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setGender("");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserEmailNotNull() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setEmail("");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setEmail("");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserEmailMinThree() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setEmail("Ab");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setEmail("Ab");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserEmailMaxHundred() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
+		SellerDto sellerDto = MasterData.getUserDto();
 		String name = "";
 		for (int i = 0; i < 120; i++) {
 			name.concat("A");
 		}
-		userDto.setEmail(name);
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		sellerDto.setEmail(name);
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserEmailValidFormat() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setEmail("abc");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setEmail("abc");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserCityNotNull() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setCity("");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setCity("");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 
 	@Test
 	public void testUserCountryNotNull() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		userDto.setCountry("");
-		Set<ConstraintViolation<UserDto>> violations = validator.validate(userDto);
+		SellerDto sellerDto = MasterData.getUserDto();
+		sellerDto.setCountry("");
+		Set<ConstraintViolation<SellerDto>> violations = validator.validate(sellerDto);
 		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
 	}
 

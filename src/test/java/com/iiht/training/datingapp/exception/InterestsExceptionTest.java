@@ -22,15 +22,10 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.iiht.training.datingapp.controller.InterestsRestController;
-import com.iiht.training.datingapp.controller.UserRestController;
 import com.iiht.training.datingapp.dto.InterestsDto;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.User;
 import com.iiht.training.datingapp.exceptions.InterestsNotFoundException;
-import com.iiht.training.datingapp.exceptions.UserNotFoundException;
 import com.iiht.training.datingapp.model.exception.ExceptionResponse;
 import com.iiht.training.datingapp.service.InterestsService;
-import com.iiht.training.datingapp.service.UserService;
 import com.iiht.training.datingapp.testutils.MasterData;
 
 @WebMvcTest(InterestsRestController.class)

@@ -4,21 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.iiht.training.datingapp.dto.DislikeDto;
-import com.iiht.training.datingapp.dto.InterestsDto;
-import com.iiht.training.datingapp.dto.LikeDto;
-import com.iiht.training.datingapp.dto.MatchDto;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.Dislike;
-import com.iiht.training.datingapp.entity.Interests;
-import com.iiht.training.datingapp.entity.Like;
-import com.iiht.training.datingapp.entity.Match;
-import com.iiht.training.datingapp.entity.User;
+import com.iiht.training.datingapp.dto.*;
+import com.iiht.training.datingapp.dto.SellerDto;
 
 public class MasterData {
 
-	public static UserDto getUserDto() {
-		UserDto user = new UserDto();
+	public static SellerDto getUserDto() {
+		SellerDto user = new SellerDto();
 		user.setUserId(1L);
 		user.setName("Name");
 		user.setEmail("name@mail.com");
@@ -31,9 +23,9 @@ public class MasterData {
 
 	}
 
-	public static List<UserDto> getUserDtoList() {
-		List<UserDto> users = new ArrayList<>();
-		UserDto user = new UserDto();
+	public static List<SellerDto> getUserDtoList() {
+		List<SellerDto> users = new ArrayList<>();
+		SellerDto user = new SellerDto();
 		user.setUserId(1L);
 		user.setName("First");
 		user.setEmail("first@mail.com");
@@ -43,7 +35,7 @@ public class MasterData {
 		user.setCity("Mumbai");
 		user.setCountry("India");
 		users.add(user);
-		user = new UserDto();
+		user = new SellerDto();
 		user.setUserId(2L);
 		user.setName("Second");
 		user.setEmail("second@mail.com");

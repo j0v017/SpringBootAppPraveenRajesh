@@ -8,8 +8,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import com.iiht.training.datingapp.dto.SellerDto;
+import com.iiht.training.datingapp.service.SellerService;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Disabled;
 //import org.junit.Test;
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -26,20 +27,17 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.iiht.training.datingapp.controller.UserRestController;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.User;
-import com.iiht.training.datingapp.service.UserService;
+import com.iiht.training.datingapp.controller.SellerRestController;
 import com.iiht.training.datingapp.testutils.MasterData;
 
-@WebMvcTest(UserRestController.class)
+@WebMvcTest(SellerRestController.class)
 @AutoConfigureMockMvc
-public class UserRestControllerTest {
+public class SellerRestControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
-	private UserService userService;
+	private SellerService sellerService;
 
 	@AfterAll
 	public static void afterAll() {
@@ -48,17 +46,17 @@ public class UserRestControllerTest {
 
 	@Test
 	public void testRegisterUser() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		UserDto savedUserDto = MasterData.getUserDto();
-		savedUserDto.setUserId(1L);
+		SellerDto sellerDto = MasterData.getUserDto();
+		SellerDto savedSellerDto = MasterData.getUserDto();
+		savedSellerDto.setUserId(1L);
 
-		when(this.userService.registerUser(userDto)).thenReturn(savedUserDto);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/users").content(MasterData.asJsonString(userDto))
+		when(this.sellerService.registerUser(sellerDto)).thenReturn(savedSellerDto);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/users").content(MasterData.asJsonString(sellerDto))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		yakshaAssert(currentTest(),
-				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(savedUserDto)) ? "true"
+				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(savedSellerDto)) ? "true"
 						: "false"),
 				businessTestFile);
 
@@ -67,19 +65,19 @@ public class UserRestControllerTest {
 	@Test
 	public void testRegisterUserIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		UserDto userDto = MasterData.getUserDto();
-		UserDto savedUserDto = MasterData.getUserDto();
-		savedUserDto.setUserId(1L);
-		when(userService.registerUser(userDto)).then(new Answer<UserDto>() {
+		SellerDto sellerDto = MasterData.getUserDto();
+		SellerDto savedSellerDto = MasterData.getUserDto();
+		savedSellerDto.setUserId(1L);
+		when(sellerService.registerUser(sellerDto)).then(new Answer<SellerDto>() {
 
 			@Override
-			public UserDto answer(InvocationOnMock invocation) throws Throwable {
+			public SellerDto answer(InvocationOnMock invocation) throws Throwable {
 				// TODO Auto-generated method stub
 				count[0]++;
-				return savedUserDto;
+				return savedSellerDto;
 			}
 		});
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/users").content(MasterData.asJsonString(userDto))
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/users").content(MasterData.asJsonString(sellerDto))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -90,9 +88,9 @@ public class UserRestControllerTest {
 
 	@Test
 	public void testGetAllUsers() throws Exception {
-		List<UserDto> users = MasterData.getUserDtoList();
+		List<SellerDto> users = MasterData.getUserDtoList();
 
-		when(this.userService.findAll()).thenReturn(users);
+		when(this.sellerService.findAll()).thenReturn(users);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON);
 
@@ -107,11 +105,11 @@ public class UserRestControllerTest {
 	@Test
 	public void testGetAllUsersIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		List<UserDto> users = MasterData.getUserDtoList();
-		when(this.userService.findAll()).then(new Answer<List<UserDto>>() {
+		List<SellerDto> users = MasterData.getUserDtoList();
+		when(this.sellerService.findAll()).then(new Answer<List<SellerDto>>() {
 
 			@Override
-			public List<UserDto> answer(InvocationOnMock invocation) throws Throwable {
+			public List<SellerDto> answer(InvocationOnMock invocation) throws Throwable {
 				// TODO Auto-generated method stub
 				count[0]++;
 				return users;
@@ -128,9 +126,9 @@ public class UserRestControllerTest {
 
 	@Test
 	public void testDeleteUser() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-        userDto.setUserId(1L);
-		when(this.userService.deleteUser(1L)).thenReturn(true);
+		SellerDto sellerDto = MasterData.getUserDto();
+        sellerDto.setUserId(1L);
+		when(this.sellerService.deleteUser(1L)).thenReturn(true);
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/users/1")
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
@@ -145,8 +143,8 @@ public class UserRestControllerTest {
 	@Test
 	public void testDeleteUserIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		UserDto userDto = MasterData.getUserDto();
-		when(this.userService.deleteUser(userDto.getUserId())).then(new Answer<Boolean>() {
+		SellerDto sellerDto = MasterData.getUserDto();
+		when(this.sellerService.deleteUser(sellerDto.getUserId())).then(new Answer<Boolean>() {
 
 			@Override
 			public Boolean answer(InvocationOnMock invocation) throws Throwable {
@@ -166,17 +164,17 @@ public class UserRestControllerTest {
 	
 	@Test
 	public void testUpdateUser() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		UserDto savedUserDto = MasterData.getUserDto();
-		savedUserDto.setUserId(1L);
+		SellerDto sellerDto = MasterData.getUserDto();
+		SellerDto savedSellerDto = MasterData.getUserDto();
+		savedSellerDto.setUserId(1L);
 
-		when(this.userService.updateUser(userDto)).thenReturn(savedUserDto);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users").content(MasterData.asJsonString(userDto))
+		when(this.sellerService.updateUser(sellerDto)).thenReturn(savedSellerDto);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users").content(MasterData.asJsonString(sellerDto))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 		yakshaAssert(currentTest(),
-				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(savedUserDto)) ? "true"
+				(result.getResponse().getContentAsString().contentEquals(MasterData.asJsonString(savedSellerDto)) ? "true"
 						: "false"),
 				businessTestFile);
 
@@ -185,19 +183,19 @@ public class UserRestControllerTest {
 	@Test
 	public void testUpdateUserIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		UserDto userDto = MasterData.getUserDto();
-		UserDto savedUserDto = MasterData.getUserDto();
-		savedUserDto.setUserId(1L);
-		when(userService.updateUser(userDto)).then(new Answer<UserDto>() {
+		SellerDto sellerDto = MasterData.getUserDto();
+		SellerDto savedSellerDto = MasterData.getUserDto();
+		savedSellerDto.setUserId(1L);
+		when(sellerService.updateUser(sellerDto)).then(new Answer<SellerDto>() {
 
 			@Override
-			public UserDto answer(InvocationOnMock invocation) throws Throwable {
+			public SellerDto answer(InvocationOnMock invocation) throws Throwable {
 				// TODO Auto-generated method stub
 				count[0]++;
-				return savedUserDto;
+				return savedSellerDto;
 			}
 		});
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users").content(MasterData.asJsonString(userDto))
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users").content(MasterData.asJsonString(sellerDto))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();

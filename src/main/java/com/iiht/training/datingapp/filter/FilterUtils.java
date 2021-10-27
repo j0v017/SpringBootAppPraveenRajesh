@@ -8,17 +8,14 @@ import java.util.stream.Collectors;
 
 import com.iiht.training.datingapp.dto.DislikeDto;
 import com.iiht.training.datingapp.dto.LikeDto;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.Dislike;
-import com.iiht.training.datingapp.entity.Like;
-import com.iiht.training.datingapp.entity.User;
+import com.iiht.training.datingapp.dto.SellerDto;
 
 public class FilterUtils {
 
-	public static List<UserDto> applyAgeFilter(List<UserDto> filteredUsers, ArrayList<?> values) {
+	public static List<SellerDto> applyAgeFilter(List<SellerDto> filteredUsers, ArrayList<?> values) {
 		int startAge = (Integer) values.get(0);
 		int endAge = (Integer) values.get(1);
-		List<UserDto> ageFiltered = new ArrayList<UserDto>();
+		List<SellerDto> ageFiltered = new ArrayList<SellerDto>();
 		filteredUsers.forEach(user -> {
 			if (user.getAge() >= startAge && user.getAge() <= endAge) {
 				ageFiltered.add(user);
@@ -27,9 +24,9 @@ public class FilterUtils {
 		return ageFiltered;
 	}
 
-	public static List<UserDto> applyLocationFilter(List<UserDto> filteredUsers, ArrayList<?> values, boolean byCity) {
+	public static List<SellerDto> applyLocationFilter(List<SellerDto> filteredUsers, ArrayList<?> values, boolean byCity) {
 		String location = values.get(0).toString();
-		List<UserDto> locationFiltered = new ArrayList<>();
+		List<SellerDto> locationFiltered = new ArrayList<>();
 		filteredUsers.forEach(user -> {
 			String userLocation = byCity ? user.getCity() : user.getCountry();
 			if (userLocation.equalsIgnoreCase(location)) {
@@ -39,9 +36,9 @@ public class FilterUtils {
 		return locationFiltered;
 	}
 
-	public static List<UserDto> applyGenderFilter(List<UserDto> filteredUsers, ArrayList<?> values) {
+	public static List<SellerDto> applyGenderFilter(List<SellerDto> filteredUsers, ArrayList<?> values) {
 		String gender = values.get(0).toString();
-		List<UserDto> genderFiltered = new ArrayList<>();
+		List<SellerDto> genderFiltered = new ArrayList<>();
 		filteredUsers.forEach(user -> {
 			String userSex = user.getGender();
 			if (userSex.equals(gender)) {
@@ -51,7 +48,7 @@ public class FilterUtils {
 		return genderFiltered;
 	}
 
-	public static List<UserDto> filterLikedUsers(List<UserDto> filteredUsers, List<LikeDto> likes) {
+	public static List<SellerDto> filterLikedUsers(List<SellerDto> filteredUsers, List<LikeDto> likes) {
 		Set<Long> userIdSet = new HashSet<Long>();
 		filteredUsers.forEach(user -> userIdSet.add(user.getUserId()));
 		likes.forEach(like -> {
@@ -64,7 +61,7 @@ public class FilterUtils {
 		return filteredUsers;
 	}
 
-	public static List<UserDto> filterDislikedUsers(List<UserDto> filteredUsers, List<DislikeDto> dislikes) {
+	public static List<SellerDto> filterDislikedUsers(List<SellerDto> filteredUsers, List<DislikeDto> dislikes) {
 		Set<Long> userIdSet = new HashSet<Long>();
 		filteredUsers.forEach(user -> userIdSet.add(user.getUserId()));
 		dislikes.forEach(like -> {

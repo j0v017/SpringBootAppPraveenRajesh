@@ -6,6 +6,8 @@ import static com.iiht.training.datingapp.testutils.TestUtils.testReport;
 import static com.iiht.training.datingapp.testutils.TestUtils.yakshaAssert;
 import static org.mockito.Mockito.when;
 
+import com.iiht.training.datingapp.dto.SellerDto;
+import com.iiht.training.datingapp.service.SellerService;
 import org.junit.jupiter.api.AfterAll;
 //import org.junit.Test;
 //import org.junit.jupiter.api.BeforeAll;
@@ -21,22 +23,19 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.iiht.training.datingapp.controller.UserRestController;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.User;
+import com.iiht.training.datingapp.controller.SellerRestController;
 import com.iiht.training.datingapp.exceptions.UserNotFoundException;
 import com.iiht.training.datingapp.model.exception.ExceptionResponse;
-import com.iiht.training.datingapp.service.UserService;
 import com.iiht.training.datingapp.testutils.MasterData;
 
-@WebMvcTest(UserRestController.class)
+@WebMvcTest(SellerRestController.class)
 @AutoConfigureMockMvc
-public class UserExceptionTest {
+public class SellerExceptionTest {
 	@Autowired
 	private MockMvc mockMvc;
 
 	@MockBean
-	private UserService userService;
+	private SellerService sellerService;
 
 	@AfterAll
 	public static void afterAll() {
@@ -45,14 +44,14 @@ public class UserExceptionTest {
 
 	@Test
 	public void testRegisterUserInvalidDataException() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		UserDto savedUserDto = MasterData.getUserDto();
-		savedUserDto.setUserId(1L);
+		SellerDto sellerDto = MasterData.getUserDto();
+		SellerDto savedSellerDto = MasterData.getUserDto();
+		savedSellerDto.setUserId(1L);
 
-		userDto.setName("ab");
+		sellerDto.setName("ab");
 
-		when(this.userService.registerUser(userDto)).thenReturn(savedUserDto);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/users").content(MasterData.asJsonString(userDto))
+		when(this.sellerService.registerUser(sellerDto)).thenReturn(savedSellerDto);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/users").content(MasterData.asJsonString(sellerDto))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -65,13 +64,13 @@ public class UserExceptionTest {
 
 	@Test
 	public void testUpdateUserInvalidDataException() throws Exception {
-		UserDto userDto = MasterData.getUserDto();
-		UserDto savedUserDto = MasterData.getUserDto();
-		savedUserDto.setUserId(1L);
+		SellerDto sellerDto = MasterData.getUserDto();
+		SellerDto savedSellerDto = MasterData.getUserDto();
+		savedSellerDto.setUserId(1L);
 
-		userDto.setName("ab");
-		when(this.userService.updateUser(userDto)).thenReturn(savedUserDto);
-		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users").content(MasterData.asJsonString(userDto))
+		sellerDto.setName("ab");
+		when(this.sellerService.updateUser(sellerDto)).thenReturn(savedSellerDto);
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users").content(MasterData.asJsonString(sellerDto))
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 
 		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
@@ -83,10 +82,10 @@ public class UserExceptionTest {
 
 	@Test
 	public void testDeleteUserNotFoundException() throws Exception {
-		ExceptionResponse exResponse = new ExceptionResponse("User with Id - 2 not Found!", System.currentTimeMillis(),
+		ExceptionResponse exResponse = new ExceptionResponse("Seller with Id - 2 not Found!", System.currentTimeMillis(),
 				HttpStatus.NOT_FOUND.value());
 
-		when(this.userService.deleteUser(2L)).thenThrow(new UserNotFoundException("User with Id - 2 not Found!"));
+		when(this.sellerService.deleteUser(2L)).thenThrow(new UserNotFoundException("Seller with Id - 2 not Found!"));
 		RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/users/2")
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON);
 

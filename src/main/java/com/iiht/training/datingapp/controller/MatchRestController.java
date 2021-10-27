@@ -2,7 +2,7 @@ package com.iiht.training.datingapp.controller;
 
 import java.util.List;
 
-import com.iiht.training.datingapp.dto.InterestsDto;
+import com.iiht.training.datingapp.dto.SellerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.iiht.training.datingapp.dto.MatchDto;
-import com.iiht.training.datingapp.dto.UserDto;
 import com.iiht.training.datingapp.filter.Filter;
 import com.iiht.training.datingapp.service.MatchService;
 
@@ -29,8 +28,8 @@ public class MatchRestController {
 	}
 
 	@PostMapping("/{userId}")
-	public ResponseEntity<List<UserDto>> getCandidates(@PathVariable Long userId, @RequestBody List<Filter> filters) {
-		List<UserDto> users = matchService.getPotentialMatches(userId, filters);
-		return new ResponseEntity<List<UserDto>>(users, HttpStatus.OK);
+	public ResponseEntity<List<SellerDto>> getCandidates(@PathVariable Long userId, @RequestBody List<Filter> filters) {
+		List<SellerDto> users = matchService.getPotentialMatches(userId, filters);
+		return new ResponseEntity<List<SellerDto>>(users, HttpStatus.OK);
 	}
 }

@@ -7,11 +7,10 @@ import static com.iiht.training.datingapp.testutils.TestUtils.yakshaAssert;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import com.iiht.training.datingapp.dto.SellerDto;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Disabled;
 //import org.junit.Test;
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -29,15 +28,10 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import com.iiht.training.datingapp.controller.MatchRestController;
-import com.iiht.training.datingapp.controller.UserRestController;
 import com.iiht.training.datingapp.dto.MatchDto;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.Match;
-import com.iiht.training.datingapp.entity.User;
 import com.iiht.training.datingapp.filter.Filter;
 import com.iiht.training.datingapp.filter.Filter.FilterType;
 import com.iiht.training.datingapp.service.MatchService;
-import com.iiht.training.datingapp.service.UserService;
 import com.iiht.training.datingapp.testutils.MasterData;
 
 @WebMvcTest(MatchRestController.class)
@@ -94,7 +88,7 @@ public class MatchRestControllerTest {
 	
 	@Test
 	public void testGetAllPotentialMatches() throws Exception {
-		List<UserDto> matches = MasterData.getUserDtoList();
+		List<SellerDto> matches = MasterData.getUserDtoList();
 		List<Filter> filters = new ArrayList<>();
 		ArrayList<String> list = new ArrayList<>();
 		list.add("Mumbai");
@@ -116,15 +110,15 @@ public class MatchRestControllerTest {
 	@Test
 	public void testGetAllPotentialMatchesIsServiceMethodCalled() throws Exception {
 		final int count[] = new int[1];
-		List<UserDto> matches = MasterData.getUserDtoList();
+		List<SellerDto> matches = MasterData.getUserDtoList();
 		List<Filter> filters = new ArrayList<>();
 		ArrayList<String> list = new ArrayList<>();
 		list.add("Mumbai");
 		filters.add(new Filter(FilterType.CITY,list));
-		when(this.matchService.getPotentialMatches(1L, filters)).then(new Answer<List<UserDto>>() {
+		when(this.matchService.getPotentialMatches(1L, filters)).then(new Answer<List<SellerDto>>() {
 
 			@Override
-			public List<UserDto> answer(InvocationOnMock invocation) throws Throwable {
+			public List<SellerDto> answer(InvocationOnMock invocation) throws Throwable {
 				// TODO Auto-generated method stub
 				count[0]++;
 				return matches;

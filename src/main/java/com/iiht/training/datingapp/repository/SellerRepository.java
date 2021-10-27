@@ -1,11 +1,10 @@
 package com.iiht.training.datingapp.repository;
 
+import com.iiht.training.datingapp.entity.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.iiht.training.datingapp.entity.User;
-
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface SellerRepository extends JpaRepository<Seller, Long> {
 
 }

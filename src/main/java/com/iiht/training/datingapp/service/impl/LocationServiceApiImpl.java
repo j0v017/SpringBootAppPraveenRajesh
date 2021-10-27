@@ -2,30 +2,30 @@ package com.iiht.training.datingapp.service.impl;
 
 import java.util.List;
 
+import com.iiht.training.datingapp.dto.SellerDto;
+import com.iiht.training.datingapp.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.iiht.training.datingapp.dto.UserDto;
 import com.iiht.training.datingapp.filter.Filter;
 import com.iiht.training.datingapp.filter.FilterUtils;
 import com.iiht.training.datingapp.service.LocationServiceApi;
-import com.iiht.training.datingapp.service.UserService;
 
 @Service
 public class LocationServiceApiImpl implements LocationServiceApi {
 
 	@Autowired
-	private UserService userService;
+	private SellerService sellerService;
 	
-	//private List<UserDto> USER_DATA = userService.findAll();
+	//private List<SellerDto> USER_DATA = sellerService.findAll();
 
 	
 
 	
 	@Override
-	public List<UserDto> getUsersDto(List<Filter> filters) {
+	public List<SellerDto> getUsersDto(List<Filter> filters) {
 		
-		List<UserDto> filteredUsers = userService.findAll();
+		List<SellerDto> filteredUsers = sellerService.findAll();
 		if (filters != null && !filters.isEmpty()) {
 			for (Filter filter : filters) {
 				filteredUsers = applyFilter(filter, filteredUsers);
@@ -34,7 +34,7 @@ public class LocationServiceApiImpl implements LocationServiceApi {
 		return filteredUsers;
 	}
 
-	private List<UserDto> applyFilter(Filter filter, List<UserDto> filteredUsers) {
+	private List<SellerDto> applyFilter(Filter filter, List<SellerDto> filteredUsers) {
 		switch (filter.getType()) {
 		case AGE:
 			filteredUsers = FilterUtils.applyAgeFilter(filteredUsers, filter.getValues());

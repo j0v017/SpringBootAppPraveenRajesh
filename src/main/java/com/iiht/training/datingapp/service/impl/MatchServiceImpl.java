@@ -3,6 +3,7 @@ package com.iiht.training.datingapp.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.iiht.training.datingapp.dto.SellerDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -12,11 +13,7 @@ import org.springframework.stereotype.Service;
 import com.iiht.training.datingapp.dto.DislikeDto;
 import com.iiht.training.datingapp.dto.LikeDto;
 import com.iiht.training.datingapp.dto.MatchDto;
-import com.iiht.training.datingapp.dto.UserDto;
-import com.iiht.training.datingapp.entity.Dislike;
-import com.iiht.training.datingapp.entity.Like;
 import com.iiht.training.datingapp.entity.Match;
-import com.iiht.training.datingapp.entity.User;
 import com.iiht.training.datingapp.filter.Filter;
 import com.iiht.training.datingapp.filter.FilterUtils;
 import com.iiht.training.datingapp.repository.MatchRepository;
@@ -62,8 +59,8 @@ public class MatchServiceImpl implements MatchService {
 	}
 
 	@Override
-	public List<UserDto> getPotentialMatches(Long userId, List<Filter> filters) {
-		List<UserDto> filteredUsers = locationServiceApi.getUsersDto(filters);
+	public List<SellerDto> getPotentialMatches(Long userId, List<Filter> filters) {
+		List<SellerDto> filteredUsers = locationServiceApi.getUsersDto(filters);
 		List<LikeDto> likes = likesService.getAllLikes(userId);
 		List<DislikeDto> dislikes = dislikesService.getAllDislikes(userId);
 		// Filter already liked users
