@@ -5,6 +5,8 @@ import com.wells.qart.eAuction.entity.Bid;
 import com.wells.qart.eAuction.exceptions.InvalidDataException;
 import com.wells.qart.eAuction.service.BidService;
 import com.wells.qart.eAuction.service.ProductService;
+import com.wells.qart.eAuction.service.SellerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,20 +18,22 @@ import java.util.List;
 @RequestMapping("/seller")
 public class SellerRestController {
 
-	//@Autowired
-	//private SellerService sellerService;
+	@Autowired
+	private SellerService sellerService;
 
-	//@Autowired
+	@Autowired
 	ProductService productService;
 
 
-	//@Autowired
+	@Autowired
 	BidService bidService;
 
 	@PostMapping("/add-product")
 	public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody ProductDto productDto, BindingResult result) {
 		if (result.hasErrors()) {
+			System.out.println("test");
 			throw new InvalidDataException("Product data is invalid");
+
 		}
 		productService.addProduct(productDto);
 		return ResponseEntity.ok(productDto);
